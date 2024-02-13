@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://fp8muhkv6ars"]
+
+[ext_resource type="Texture2D" uid="uid://dapj7xxlsntb6" path="res://trees/tree.png" id="1_cspqr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qp8x"]
+size = Vector2(6.48752, 2.14394)
+
+[node name="Tree" type="StaticBody2D"]
+scale = Vector2(4, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -19)
+scale = Vector2(1.24171, 1.16326)
+texture = ExtResource("1_cspqr")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"op_exp": false,
+"player": "",
+"source": "C:/Users/natkr/Desktop/tree.aseprite"
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.125, -2.125)
+scale = Vector2(1.11753, 1.04947)
+shape = SubResource("RectangleShape2D_0qp8x")

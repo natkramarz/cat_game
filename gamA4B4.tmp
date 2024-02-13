@@ -1,0 +1,254 @@
+[gd_scene load_steps=9 format=3 uid="uid://crwhoge5y6tsf"]
+
+[ext_resource type="PackedScene" uid="uid://bdyb6binynh7p" path="res://characters/player/player.tscn" id="2_86j8j"]
+[ext_resource type="PackedScene" uid="uid://fp8muhkv6ars" path="res://trees/pixel_tree.tscn" id="3_437t4"]
+[ext_resource type="PackedScene" uid="uid://drypxelc3sl8e" path="res://characters/dog/enemy.tscn" id="3_cmoyy"]
+
+[sub_resource type="GDScript" id="GDScript_tuxtl"]
+resource_name = "spawn.gd"
+script/source = "extends Node2D
+
+@export var enemy: PackedScene
+
+func _ready():
+	%StartMenu.visible = true 
+	enemy = preload(\"res://characters/dog/enemy.tscn\")
+	pause()
+
+func pause():
+	process_mode = PROCESS_MODE_DISABLED
+
+func unpause():
+	process_mode = PROCESS_MODE_INHERIT
+
+func spawn_mob():
+	var new_mob = enemy.instantiate()
+	%PathFollow2D.progress_ratio = randf()
+	new_mob.global_position = %PathFollow2D.global_position
+	add_child(new_mob)
+	
+
+
+
+func _on_timer_timeout():
+	spawn_mob()
+
+
+func _on_player_health_depleted():
+	%GameOver.visible = true 
+	get_tree().paused = true 
+
+
+func _on_button_pressed():
+	print(\"here\")
+	%StartMenu.visible = false
+	get_tree().paused = false
+"
+
+[sub_resource type="Curve2D" id="Curve2D_g227d"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -471, -427, 0, 0, 0, 0, 2291, -422, 0, 0, 0, 0, 2282, 1324, 0, 0, 0, 0, -476, 1324, 0, 0, 0, 0, -468, -425, 0, 0, 0, 0, -471, -427)
+}
+point_count = 6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvwim"]
+size = Vector2(3081.32, 71)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t7ux0"]
+size = Vector2(114, 1981)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ht6tl"]
+size = Vector2(75, 1849)
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = SubResource("GDScript_tuxtl")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+y_sort_enabled = true
+offset_left = -503.0
+offset_top = -462.0
+offset_right = 2327.0
+offset_bottom = 1367.0
+scale = Vector2(0.996811, 0.996509)
+color = Color(0.372549, 0.556863, 0.160784, 1)
+
+[node name="Tree" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(894, 97)
+
+[node name="Tree2" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(1262, 254)
+
+[node name="Tree3" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(1269, 644)
+
+[node name="Tree4" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(638, 802)
+
+[node name="Tree5" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(-22, 614)
+
+[node name="Tree6" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(630, 215)
+
+[node name="Tree7" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(1041, 934)
+
+[node name="Tree8" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(1222, 292)
+
+[node name="Tree9" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(1292, 307)
+
+[node name="Player" parent="." instance=ExtResource("2_86j8j")]
+position = Vector2(700, 423)
+platform_floor_layers = 4294901760
+
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-700, -423)
+curve = SubResource("Curve2D_g227d")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(-471, -427)
+rotation = 0.00181028
+
+[node name="Mob" parent="." instance=ExtResource("3_cmoyy")]
+position = Vector2(377, 717)
+
+[node name="Mob2" parent="." instance=ExtResource("3_cmoyy")]
+position = Vector2(1444, 476)
+
+[node name="Mob3" parent="." instance=ExtResource("3_cmoyy")]
+position = Vector2(119, 81)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(849.338, -500)
+shape = SubResource("RectangleShape2D_lvwim")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-558, 451.5)
+shape = SubResource("RectangleShape2D_t7ux0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(909.535, 1395)
+shape = SubResource("RectangleShape2D_lvwim")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(2352.5, 458.5)
+shape = SubResource("RectangleShape2D_ht6tl")
+
+[node name="Tree10" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(1645, 1046)
+
+[node name="Tree11" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(-26, 1058)
+
+[node name="Tree12" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(64, -13)
+
+[node name="Tree13" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(1608, 102)
+
+[node name="Tree14" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(30, 653)
+
+[node name="Tree15" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(674, 838)
+
+[node name="Tree16" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(152, -27)
+
+[node name="Tree17" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(-24, 41)
+
+[node name="Tree18" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(57, 39)
+
+[node name="Tree19" parent="." instance=ExtResource("3_437t4")]
+position = Vector2(797, 1151)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.32549)
+
+[node name="Label" type="Label" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -11.5
+offset_right = 43.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Game Over"
+
+[node name="StartMenu" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="StartMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.32549)
+
+[node name="Label" type="Label" parent="StartMenu/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -464.0
+offset_top = -195.0
+offset_right = 627.0
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "Try surving in the wild "
+
+[node name="Label2" type="Label" parent="StartMenu/ColorRect"]
+layout_mode = 0
+offset_left = 978.0
+offset_top = 531.0
+offset_right = 1084.0
+offset_bottom = 580.0
+text = "E: Attack
+A, W, D: Move"
+
+[node name="Button" type="Button" parent="StartMenu"]
+offset_left = 921.0
+offset_top = 622.0
+offset_right = 1144.0
+offset_bottom = 698.0
+theme_override_font_sizes/font_size = 30
+text = "Start the game"
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="StartMenu/Button" to="." method="_on_button_pressed"]

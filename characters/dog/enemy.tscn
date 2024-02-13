@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://drypxelc3sl8e"]
+
+[ext_resource type="PackedScene" uid="uid://c8hauxmvhhc1j" path="res://characters/dog/dog.tscn" id="1_ckvl3"]
+[ext_resource type="Script" path="res://characters/dog/enemy.gd" id="1_i3r78"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0bx5b"]
+radius = 808.356
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gig0g"]
+radius = 23.0217
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_63gwk"]
+radius = 29.0172
+
+[node name="enemy" type="CharacterBody2D"]
+platform_floor_layers = 4294901760
+script = ExtResource("1_i3r78")
+
+[node name="Dog" parent="." instance=ExtResource("1_ckvl3")]
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(-2, -23)
+shape = SubResource("CircleShape2D_0bx5b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5, -18)
+shape = SubResource("CircleShape2D_gig0g")
+
+[node name="EnemyHitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitbox"]
+position = Vector2(-5, -19)
+shape = SubResource("CircleShape2D_63gwk")
+debug_color = Color(0.713726, 0.305882, 0.929412, 0.419608)
+
+[node name="TakeDamageCooldown" type="Timer" parent="."]
+wait_time = 0.25
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="EnemyHitbox" to="." method="_on_enemy_hitbox_body_entered"]
+[connection signal="body_exited" from="EnemyHitbox" to="." method="_on_enemy_hitbox_body_exited"]
+[connection signal="timeout" from="TakeDamageCooldown" to="." method="_on_take_damage_cooldown_timeout"]
